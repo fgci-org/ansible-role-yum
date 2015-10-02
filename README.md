@@ -1,7 +1,7 @@
 ansible-role-yum
 =========
 
-Add repos. Add gpgkeys for the repos. Install software from the repos that do not require any extra configuration. Software with configuration should be in new roles. 
+Add repos. Install software from the repos that do not require any extra configuration. Software with configuration should be in new roles. 
 
 Requirements
 ------------
