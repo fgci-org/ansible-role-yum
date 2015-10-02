@@ -1,0 +1,11 @@
+---
+# defaults file for ansible-role-yum
+
+centos_releases:
+ - epel-release
+
+unconfigured_packages:
+ - ""
+
+remove_packages:
+ - ""
