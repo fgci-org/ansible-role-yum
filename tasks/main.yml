@@ -5,6 +5,9 @@
   yum: name={{ item }} state=present
   with_items: centos_releases | default({})
 
+- name: update all the things
+  yum: name=* state=latest
+
 - name: install IB software that do not need extra configuration - on nodes with ib interfaces
   yum: name={{ item }} state=present
   with_items: ib_unconfigured_packages | default({})
