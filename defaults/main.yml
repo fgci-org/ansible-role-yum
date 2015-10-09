@@ -10,4 +10,4 @@ unconfigured_packages:
 remove_packages:
  - ""
 
-infiniband_on_login_node: False
+infiniband_available: False
