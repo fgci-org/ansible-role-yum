@@ -10,4 +10,7 @@ unconfigured_packages:
 remove_packages:
  - ""
 
+ib_unconfigured_packages:
+ - ""
+
 infiniband_available: False
