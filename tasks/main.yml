@@ -1,22 +1,5 @@
 ---
 # tasks file for ansible-role-yum
 
-- name: install repos that are in repos from CentOS
-  yum: name={{ item }} state=present
-  with_items: centos_releases | default({})
-
-- name: update all the things
-  yum: name=* state=latest
-
-- name: install IB software that do not need extra configuration - on nodes with ib interfaces
-  yum: name={{ item }} state=present
-  with_items: ib_unconfigured_packages | default({})
-  when: infiniband_available
-
-- name: install software that do not need extra configuration
-  yum: name={{ item }} state=present
-  with_items: unconfigured_packages | default({})
-
-- name: remove software 
-  yum: "name={{ item }} state=absent"
-  with_items: remove_packages | default({})
+- include: redhat.yml
+  when: ansible_os_family == "RedHat"
