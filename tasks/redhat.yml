@@ -11,12 +11,12 @@
 - name: install IB software that do not need extra configuration - on nodes with ib interfaces
   yum: name={{ item }} state=present
   with_items: ib_unconfigured_packages | default({})
-  when: infiniband_available and ib_unconfigured_packages != ""
+  when: infiniband_available and ib_unconfigured_packages.0 != ""
 
 - name: install software that do not need extra configuration
   yum: name={{ item }} state=present
   with_items: unconfigured_packages | default({})
-  when: unconfigured_packages != ""
+  when: unconfigured_packages.0 != ""
 
 - name: remove software 
   yum: "name={{ item }} state=absent"
