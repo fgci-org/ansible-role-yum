@@ -22,3 +22,8 @@
   yum: "name={{ item }} state=absent"
   with_items: remove_packages | default({})
   when: remove_packages != ""
+
+- name: disable services
+  service: "name={{ item }} enabled=no"
+  with_items: disable_packages | default({})
+  when: disable_packages != ""

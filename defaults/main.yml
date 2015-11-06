@@ -10,6 +10,9 @@ unconfigured_packages:
 remove_packages:
  - ""
 
+disabled_packages:
+ - ""
+
 ib_unconfigured_packages:
  - ""
 
