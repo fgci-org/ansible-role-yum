@@ -23,7 +23,7 @@
   with_items: remove_packages | default({})
   when: remove_packages != ""
 
-- name: disable services
-  service: "name={{ item }} enabled=no"
+- name: disable and stop services
+  service: "name={{ item }} enabled=no state=stopped"
   with_items: disable_packages | default({})
   when: disable_packages != ""
