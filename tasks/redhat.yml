@@ -21,9 +21,9 @@
 - name: remove software 
   yum: "name={{ item }} state=absent"
   with_items: remove_packages | default({})
-  when: remove_packages != ""
+  when: remove_packages.0 != ""
 
 - name: disable and stop services
   service: "name={{ item }} enabled=no state=stopped"
   with_items: disable_packages | default({})
-  when: disable_packages != ""
+  when: disable_packages.0 != ""
