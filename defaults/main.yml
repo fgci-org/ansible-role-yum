@@ -21,6 +21,6 @@ infiniband_available: False
 # yum_conf_template overwrites /etc/yum.conf if True
 yum_conf_template: True
 # yum_proxy adds a proxy= in yum.conf
-yum_proxy: False
+#yum_proxy: 10.1.1.4
 # yum_http_cache hadds an http_caching= in yum.conf
 yum_http_caching: packages
