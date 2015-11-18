@@ -27,10 +27,10 @@ distroverpkg=centos-release
 # in /etc/yum.repos.d
 
 {% if yum_conf_template %}
-  {% if yum_proxy is defined %}
+{% if yum_proxy is defined %}
 proxy={{ yum_proxy }}
-    {% if yum_http_caching is defined %}
+{% if yum_http_caching is defined %}
 http_caching={{ yum_http_caching }}
-    {% endif %}
-  {% endif %}
+{% endif %}
+{% endif %}
 {% endif %}
