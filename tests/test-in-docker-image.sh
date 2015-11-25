@@ -119,6 +119,7 @@ function test_playbook(){
       ansible-playbook -i ${ANSIBLE_INVENTORY} $book ${ANSIBLE_LOG_LEVEL} --connection=local ${SUDO_OPTION} ${ANSIBLE_EXTRA_VARS} || grep -q 'changed=0.*failed=0' && (echo 'Idempotence test: pass' ) || (echo 'Idempotence test: fail' && exit 1)
     done
 }
+
 function extra_tests(){
 
     ${APACHE_CTL} configtest || (echo "php --version was failed" && exit 100 )
