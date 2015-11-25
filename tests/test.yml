@@ -11,6 +11,6 @@
       - "firewalld"
      ib_unconfigured_packages: 
       - "openmpi"
-     infiniband_available: True:
+     infiniband_available: True
    roles:
      - ansible-role-yum
