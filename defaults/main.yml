@@ -7,6 +7,9 @@ centos_releases:
 unconfigured_packages:
  - ""
 
+unconfigured_packages_global:
+ - ""
+
 remove_packages:
  - ""
 

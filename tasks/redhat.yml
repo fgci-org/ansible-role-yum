@@ -25,6 +25,11 @@
   with_items: unconfigured_packages | default({})
   when: unconfigured_packages.0 != ""
 
+- name: install globally software that do not need extra configuration
+  yum: name={{ item }} state=present
+  with_items: unconfigured_packages_global | default({})
+  when: unconfigured_packages_global.0 != ""
+
 - name: remove software 
   yum: "name={{ item }} state=absent"
   with_items: remove_packages | default({})
