@@ -27,3 +27,6 @@ yum_conf_template: True
 #yum_proxy: http://10.1.1.4:3128
 # yum_http_cache hadds an http_caching= in yum.conf
 yum_http_caching: packages
+
+# Set yes to force cache update
+yum_update_cache: no

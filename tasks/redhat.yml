@@ -13,7 +13,7 @@
   when: yum_conf_template == True and ansible_distribution == "CentOS" and ansible_distribution_major_version == "7"
 
 - name: update all the things
-  yum: name=* state=latest
+  yum: name=* state=latest update_cache={{ yum_update_cache }}
 
 - name: install IB software that do not need extra configuration - on nodes with ib interfaces
   yum: name={{ item }} state=present
