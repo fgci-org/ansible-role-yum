@@ -12,5 +12,7 @@
      ib_unconfigured_packages: 
       - "openmpi"
      infiniband_available: True
+     yum_conf_extra_settings:
+      - "exclude=some_package*"
    roles:
      - ansible-role-yum
