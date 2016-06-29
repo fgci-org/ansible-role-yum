@@ -3,16 +3,16 @@
  - hosts: localhost
    remote_user: root
    vars:
-     - unconfigured_packages: 
+     unconfigured_packages: 
       - "screen"
-     - remove_packages: 
+     remove_packages: 
       - "telnet"
-     - disabled_packages: 
+     disabled_packages: 
       - "firewalld"
-     - ib_unconfigured_packages: 
+     ib_unconfigured_packages: 
       - "openmpi"
-     - infiniband_available: True
-     - yum_conf_extra_settings:
+     infiniband_available: True
+     yum_conf_extra_settings:
       - "exclude=some_package*"
    roles:
      - ansible-role-yum
