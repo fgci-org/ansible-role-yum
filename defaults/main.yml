@@ -30,3 +30,12 @@ yum_http_caching: packages
 
 # Set yes to force cache update
 yum_update_cache: no
+
+# yum.conf settings
+# how many packages to keep:
+yum_main_installonly_limit: 3
+
+# Define this list to add some extra settings in yum.conf
+#yum_conf_extra_settings:
+# - "exclude=some_package*"
+
