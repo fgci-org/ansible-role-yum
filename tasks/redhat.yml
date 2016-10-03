@@ -14,6 +14,7 @@
 
 - name: update all the things
   yum: name=* state=latest update_cache={{ yum_update_cache }}
+  when: yum_update_all_the_things
 
 - name: install IB software that do not need extra configuration - on nodes with ib interfaces
   yum: name={{ item }} state=present

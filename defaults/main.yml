@@ -31,6 +31,9 @@ yum_http_caching: packages
 # Set yes to force cache update
 yum_update_cache: no
 
+# The role can update * to "latest". By default it is disabled
+yum_update_all_the_things: False
+
 # yum.conf settings
 # how many packages to keep:
 yum_main_installonly_limit: 3
