@@ -1,4 +1,4 @@
-# Managed by Ansible
+# {{ ansible_managed }}
 [main]
 cachedir=/var/cache/yum/$basearch/$releasever
 keepcache=0
@@ -11,7 +11,11 @@ plugins=1
 installonly_limit={{ yum_main_installonly_limit }}
 bugtracker_url=http://bugs.centos.org/set_project.php?project_id=23&ref=http://bugs.centos.org/bug_report_page.php?category=yum
 distroverpkg=centos-release
-ip_resolve=4
+{% if yum_conf_template %}
+{% if yum_ip_resolve is defined %}
+ip_resolve={{ yum_ip_resolve }}
+{% endif %}
+{% endif %}
 
 #  This is the default, if you make this bigger yum won't see if the metadata
 # is newer on the remote and so you'll "gain" the bandwidth of not having to

@@ -27,6 +27,9 @@ yum_conf_template: True
 #yum_proxy: http://10.1.1.4:3128
 # yum_http_cache hadds an http_caching= in yum.conf
 yum_http_caching: packages
+# By default we only use the IPv4 addresses, change to a 6 for IPv6 only.
+# Comment out yum_ip_resolve to not set it at all
+yum_ip_resolve: "4"
 
 # Set yes to force cache update
 yum_update_cache: no
