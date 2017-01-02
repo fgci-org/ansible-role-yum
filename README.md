@@ -8,12 +8,13 @@ Add repos. Install software from the repos that do not require any extra configu
 Requirements
 ------------
 
+ansible 2.1 (because yum_repository module)
+
 
 Role Variables
 --------------
 
 see defaults/main.yml
-
 
 Dependencies
 ------------
