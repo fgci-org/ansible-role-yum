@@ -2,50 +2,82 @@
 # tasks file for ansible-role-yum
 
 - name: install repos that are in repos from CentOS
-  yum: name={{ item }} state=present
+  yum:
+    name: "{{ item }}"
+    state: present
   with_items: "{{ centos_releases | default({}) }}"
 
 - name: add local defined yum repositories
   yum_repository:
-    name="{{ item.name }}"
-    description="{{ item.name }}"
-    baseurl={{ item.url }}
-    gpgkey={{ item.gpgkey }}
-    gpgcheck="yes"
+    name: "{{ item.name }}"
+    description: "{{ item.name }}"
+    baseurl: "{{ item.url }}"
+    gpgkey: "{{ item.gpgkey | default(omit) }}"
+    gpgcheck: "{{ item.gpgcheck | default(omit) }}"
+    enabled: "{{ item.enabled | default(omit) }}"
+    exclude: "{{ item.exclude | default(omit) }}"
+    state: "{{ item.state | default(omit) }}"
   with_items: "{{ yum_repos | default({}) }}"
 
 - name: always install libselinux-python without it ansible facts cannot tell if selinux is enabled
-  yum: name=libselinux-python state=present
+  yum:
+    name: libselinux-python
+    state: present
 
 - name: template in yum.conf on CentOS7 if yum_conf_template is True
-  template: src=yum.conf.j2 dest=/etc/yum.conf mode=0644 owner=root group=root backup=yes
-  when: yum_conf_template == True and ansible_distribution == "CentOS" and ansible_distribution_major_version == "7"
+  template:
+    src: yum.conf.j2
+    dest: /etc/yum.conf
+    mode: 0644
+    owner: root
+    group: root
+    backup: yes
+  when:
+    - yum_conf_template == True
+    - ansible_distribution == "CentOS"
+    - ansible_distribution_major_version == "7"
 
 - name: update all the things
-  yum: name=* state=latest update_cache={{ yum_update_cache }}
+  yum:
+    name: "*"
+    state: latest
+    update_cache: "{{ yum_update_cache }}"
   when: yum_update_all_the_things
 
 - name: install IB software that do not need extra configuration - on nodes with ib interfaces
-  yum: name={{ item }} state=present
+  yum:
+    name: "{{ item }}"
+    state: present
   with_items: "{{ ib_unconfigured_packages | default({}) }}"
-  when: infiniband_available and ib_unconfigured_packages.0 != ""
+  when:
+    - infiniband_available
+    - ib_unconfigured_packages.0 != ""
 
 - name: install software that do not need extra configuration
-  yum: name={{ item }} state=present
+  yum:
+    name: "{{ item }}"
+    state: present
   with_items: "{{ unconfigured_packages | default({}) }}"
   when: unconfigured_packages.0 != ""
 
 - name: install globally software that do not need extra configuration
-  yum: name={{ item }} state=present
+  yum:
+    name: "{{ item }}"
+    state: present
   with_items: "{{ unconfigured_packages_global | default({}) }}"
   when: unconfigured_packages_global.0 != ""
 
-- name: remove software 
-  yum: "name={{ item }} state=absent"
+- name: remove software
+  yum:
+    name: "{{ item }}"
+    state: absent
   with_items: "{{ remove_packages | default({}) }}"
   when: remove_packages.0 != ""
 
 - name: disable and stop services
-  service: "name={{ item }} enabled=no state=stopped"
+  service:
+    name: "{{ item }}"
+    enabled: no
+    state: stopped
   with_items: "{{ disable_packages | default({}) }}"
   when: disable_packages.0 != ""
