@@ -125,6 +125,8 @@ function extra_tests(){
 
     echo "TEST: cat /etc/yum.conf"
     cat /etc/yum.conf
+    echo "TEST: ls -l /etc/yum.repos.d"
+    ls -l /etc/yum.repos.d
 }
 
 
