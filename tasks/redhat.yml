@@ -19,6 +19,12 @@
     state: "{{ item.state | default(omit) }}"
   with_items: "{{ yum_repos | default({}) }}"
 
+- name: import GPG key for repos
+  rpm_key:
+    key: "{{ item.gpgkey }}"
+  with_items: "{{ yum_repos }}"
+  when: item.gpgkey is defined
+
 - name: always install libselinux-python without it ansible facts cannot tell if selinux is enabled
   yum:
     name: libselinux-python
