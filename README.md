@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/CSC-IT-Center-for-Science/ansible-role-yum.svg?branch=master)](https://travis-ci.org/CSC-IT-Center-for-Science/ansible-role-yum)
+[![Build Status](https://travis-ci.org/CSCfi/ansible-role-yum.svg?branch=master)](https://travis-ci.org/CSCfi/ansible-role-yum)
 
 ansible-role-yum
 =========
