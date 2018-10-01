@@ -46,32 +46,28 @@
 
 - name: install IB software that do not need extra configuration - on nodes with ib interfaces
   yum:
-    name: "{{ item }}"
+    name: "{{ ib_unconfigured_packages | default({}) }}"
     state: present
-  with_items: "{{ ib_unconfigured_packages | default({}) }}"
   when:
     - infiniband_available
     - ib_unconfigured_packages.0 != ""
 
 - name: install software that do not need extra configuration
   yum:
-    name: "{{ item }}"
+    name: "{{ unconfigured_packages | default({}) }}"
     state: present
-  with_items: "{{ unconfigured_packages | default({}) }}"
   when: unconfigured_packages.0 != ""
 
 - name: install globally software that do not need extra configuration
   yum:
-    name: "{{ item }}"
+    name: "{{ unconfigured_packages_global | default({}) }}"
     state: present
-  with_items: "{{ unconfigured_packages_global | default({}) }}"
   when: unconfigured_packages_global.0 != ""
 
 - name: remove software
   yum:
-    name: "{{ item }}"
+    name: "{{ remove_packages | default({}) }}"
     state: absent
-  with_items: "{{ remove_packages | default({}) }}"
   when: remove_packages.0 != ""
 
 - name: disable and stop services
