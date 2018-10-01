@@ -38,6 +38,7 @@ fi
 cd $RDIR/..
 printf "[defaults]\nroles_path = ../:roles" > ansible.cfg
 printf "" > ssh.config
+cp tests/RPM-GPG-KEY-CSC-GRID-2 /etc/pki/rpm-gpg/
 
 function show_version() {
 
@@ -63,7 +64,7 @@ cd ansible
 # checking out this commit because some errors after 2015-11-05
 #git checkout 07d0d2720c73816e1206882db7bc856087eb5c3f
 # because systemctl and systemd
-git checkout 589971fe7ef78ea8bb41fb9ae6cd19cb8e277371
+#git checkout 589971fe7ef78ea8bb41fb9ae6cd19cb8e277371
 make rpm 2>&1 >/dev/null
 rpm -Uvh ./rpm-build/ansible-*.noarch.rpm ||(echo "Could not install built ansible devel rpms" && exit 2 )
 cd ..
