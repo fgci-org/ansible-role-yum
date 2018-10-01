@@ -83,3 +83,4 @@
     state: stopped
   with_items: "{{ disable_packages | default({}) }}"
   when: disable_packages.0 != ""
+
