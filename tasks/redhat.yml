@@ -19,6 +19,12 @@
     state: "{{ item.state | default(omit) }}"
   with_items: "{{ yum_repos | default({}) }}"
 
+- name: import GPG key for repos
+  rpm_key:
+    key: "{{ item.gpgkey }}"
+  with_items: "{{ yum_repos }}"
+  when: item.gpgkey is defined
+
 - name: always install libselinux-python without it ansible facts cannot tell if selinux is enabled
   yum:
     name: libselinux-python
@@ -46,32 +52,28 @@
 
 - name: install IB software that do not need extra configuration - on nodes with ib interfaces
   yum:
-    name: "{{ item }}"
+    name: "{{ ib_unconfigured_packages | default({}) }}"
     state: present
-  with_items: "{{ ib_unconfigured_packages | default({}) }}"
   when:
     - infiniband_available
     - ib_unconfigured_packages.0 != ""
 
 - name: install software that do not need extra configuration
   yum:
-    name: "{{ item }}"
+    name: "{{ unconfigured_packages | default({}) }}"
     state: present
-  with_items: "{{ unconfigured_packages | default({}) }}"
   when: unconfigured_packages.0 != ""
 
 - name: install globally software that do not need extra configuration
   yum:
-    name: "{{ item }}"
+    name: "{{ unconfigured_packages_global | default({}) }}"
     state: present
-  with_items: "{{ unconfigured_packages_global | default({}) }}"
   when: unconfigured_packages_global.0 != ""
 
 - name: remove software
   yum:
-    name: "{{ item }}"
+    name: "{{ remove_packages | default({}) }}"
     state: absent
-  with_items: "{{ remove_packages | default({}) }}"
   when: remove_packages.0 != ""
 
 - name: disable and stop services
@@ -81,3 +83,4 @@
     state: stopped
   with_items: "{{ disable_packages | default({}) }}"
   when: disable_packages.0 != ""
+
