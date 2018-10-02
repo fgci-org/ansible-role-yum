@@ -15,9 +15,9 @@
      yum_conf_extra_settings:
       - "exclude=some_package*"
      yum_repos:
-      - { name: "fgislurm", url: "http://idris.fgi.csc.fi/fgci7/x86_64/fgcislurm1711", gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CSC-GRID-2", gpgcheck: "1", enabled: "1", state: "present" }
-      - { name: "fgioldslurm", url: "http://idris.fgi.csc.fi/fgci7/x86_64/fgcislurm1702", gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CSC-GRID-2" }
-      - { name: "fgibadslurm", url: "http://idris.fgi.csc.fi/fgci7/x86_64/fgcislurm1605", gpgkey: "file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CSC-GRID-2", state: "absent" }
+      - { name: "fgislurm", url: "http://idris.fgi.csc.fi/fgci7/x86_64/fgcislurm1711", gpgkey: "http://idris.fgi.csc.fi/fgirepo6/RPM-GPG-KEY-CSC-GRID-2", gpgcheck: "1", enabled: "1", state: "present" }
+      - { name: "fgioldslurm", url: "http://idris.fgi.csc.fi/fgci7/x86_64/fgcislurm1702", gpgkey: "http://idris.fgi.csc.fi/fgirepo6/RPM-GPG-KEY-CSC-GRID-2" }
+      - { name: "fgibadslurm", url: "http://idris.fgi.csc.fi/fgci7/x86_64/fgcislurm1605", gpgkey: "http://idris.fgi.csc.fi/fgirepo6/RPM-GPG-KEY-CSC-GRID-2", state: "absent" }
 
    roles:
      - ansible-role-yum
