@@ -3,9 +3,8 @@
 
 - name: install repos that are in repos from CentOS
   yum:
-    name: "{{ item }}"
+    name: "{{ centos_releases | default({}) }}"
     state: present
-  with_items: "{{ centos_releases | default({}) }}"
 
 - name: add local defined yum repositories
   yum_repository:
