@@ -55,25 +55,32 @@
     state: present
   when:
     - infiniband_available
-    - ib_unconfigured_packages.0 != ""
+    - ib_unconfigured_packages is defined
+    - ib_unconfigured_packages | length > 0
 
 - name: install software that do not need extra configuration
   yum:
     name: "{{ unconfigured_packages | default({}) }}"
     state: present
-  when: unconfigured_packages.0 != ""
+  when:
+    - unconfigured_packages is defined
+    - unconfigured_packages | length > 0
 
 - name: install globally software that do not need extra configuration
   yum:
     name: "{{ unconfigured_packages_global | default({}) }}"
     state: present
-  when: unconfigured_packages_global.0 != ""
+  when:
+    - unconfigured_packages_global is defined
+    - unconfigured_packages_global | length > 0
 
 - name: remove software
   yum:
     name: "{{ remove_packages | default({}) }}"
     state: absent
-  when: remove_packages.0 != ""
+  when:
+    - remove_packages is defined
+    - remove_packages | length > 0
 
 - name: disable and stop services
   service:
@@ -81,5 +88,7 @@
     enabled: no
     state: stopped
   with_items: "{{ disable_packages | default({}) }}"
-  when: disable_packages.0 != ""
+  when:
+    - disable_packages is defined
+    - disable_packages | length > 0
 
