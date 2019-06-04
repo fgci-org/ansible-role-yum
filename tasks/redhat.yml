@@ -54,7 +54,7 @@
     name: "{{ ib_unconfigured_packages | default({}) }}"
     state: present
   when:
-    - infiniband_available
+    - infiniband_available|bool
     - ib_unconfigured_packages is defined
     - ib_unconfigured_packages | length > 0
 
