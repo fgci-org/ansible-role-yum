@@ -47,7 +47,7 @@
     name: "*"
     state: latest
     update_cache: "{{ yum_update_cache }}"
-  when: yum_update_all_the_things
+  when: yum_update_all_the_things|bool
 
 - name: install IB software that do not need extra configuration - on nodes with ib interfaces
   yum:
