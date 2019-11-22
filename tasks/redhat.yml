@@ -38,7 +38,7 @@
     group: root
     backup: yes
   when:
-    - yum_conf_template == True
+    - yum_conf_template
     - ansible_distribution == "CentOS"
     - ansible_distribution_major_version == "7"
 
