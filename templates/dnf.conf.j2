@@ -1,0 +1,34 @@
+# {{ ansible_managed }}
+[main]
+gpgcheck=1
+installonly_limit=3
+clean_requirements_on_remove=True
+best=True
+skip_if_unavailable=False
+keepcache=False
+cachedir=/var/cache/yum/$basearch/$releasever
+debuglevel=2
+obsoletes=true
+plugins=true
+fastestmirror=1
+
+{% if yum_conf_template %}
+{% if yum_ip_resolve is defined %}
+ip_resolve={{ yum_ip_resolve }}
+{% endif %}
+{% endif %}
+
+
+{% if yum_conf_template %}
+{% if yum_proxy is defined %}
+proxy={{ yum_proxy }}
+{% endif %}
+{% endif %}
+
+{% if yum_conf_extra_settings is defined %}
+# Extra yum settings
+{% for yumsetting in yum_conf_extra_settings %}
+{{ yumsetting }}
+{% endfor %}
+{% endif %}
+

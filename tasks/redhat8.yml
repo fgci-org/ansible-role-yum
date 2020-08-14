@@ -1,0 +1,96 @@
+---
+# tasks file for ansible-role-yum Redhat-8 family
+# In Redhat8/CentOS8. Yum has been replaced with dnf. Using yum still in ansible parameter names, 
+# but changing already to dnf packet manager
+
+- name: install repos that are in repos from CentOS
+  dnf:
+    name: "{{ centos_releases | default({}) }}"
+    state: present
+
+- name: add local defined yum repositories
+  yum_repository:
+    name: "{{ item.name }}"
+    description: "{{ item.name }}"
+    baseurl: "{{ item.url }}"
+    gpgkey: "{{ item.gpgkey | default(omit) }}"
+    gpgcheck: "{{ item.gpgcheck | default(omit) }}"
+    enabled: "{{ item.enabled | default(omit) }}"
+    exclude: "{{ item.exclude | default(omit) }}"
+    state: "{{ item.state | default(omit) }}"
+  with_items: "{{ yum_repos | default({}) }}"
+
+- name: import GPG key for repos
+  rpm_key:
+    key: "{{ item.gpgkey }}"
+  with_items: "{{ yum_repos | default({}) }}"
+  when: item.gpgkey is defined
+
+- name: always install libselinux-python without it ansible facts cannot tell if selinux is enabled
+  dnf:
+    name: python3-libselinux
+    state: present
+
+# /etc/dnf/dnf.conf 
+- name: template in dnf.conf on CentOS8 if yum_conf_template is True
+  template:
+    src: dnf.conf.j2
+    dest: /etc/dnf/dnf.conf
+    mode: 0644
+    owner: root
+    group: root
+    backup: yes
+  when:
+    - yum_conf_template
+    - ansible_distribution == "CentOS"
+
+- name: update all the things
+  dnf:
+    name: "*"
+    state: latest
+    update_cache: "{{ yum_update_cache }}"
+  when: yum_update_all_the_things|bool
+
+- name: install IB software that do not need extra configuration - on nodes with ib interfaces
+  dnf:
+    name: "{{ ib_unconfigured_packages | default({}) }}"
+    state: present
+  when:
+    - infiniband_available|bool
+    - ib_unconfigured_packages is defined
+    - ib_unconfigured_packages | length > 0
+
+- name: install software that do not need extra configuration
+  dnf:
+    name: "{{ unconfigured_packages | default({}) }}"
+    state: present
+  when:
+    - unconfigured_packages is defined
+    - unconfigured_packages | length > 0
+
+- name: install globally software that do not need extra configuration
+  dnf:
+    name: "{{ unconfigured_packages_global | default({}) }}"
+    state: present
+  when:
+    - unconfigured_packages_global is defined
+    - unconfigured_packages_global | length > 0
+
+- name: remove software
+  dnf:
+    name: "{{ remove_packages | default({}) }}"
+    state: absent
+  when:
+    - remove_packages is defined
+    - remove_packages | length > 0
+
+- name: disable and stop services
+  service:
+    name: "{{ item }}"
+    enabled: no
+    state: stopped
+  with_items: "{{ disable_packages | default({}) }}"
+  when:
+    - disable_packages is defined
+    - disable_packages | length > 0
+
