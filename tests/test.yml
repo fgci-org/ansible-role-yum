@@ -15,9 +15,8 @@
      yum_conf_extra_settings:
       - "exclude=some_package*"
      yum_repos:
-      - { name: "fgislurm", url: "http://idris.fgi.csc.fi/fgci7/x86_64/fgcislurm1711", gpgkey: "http://idris.fgi.csc.fi/fgirepo6/RPM-GPG-KEY-CSC-GRID-2", gpgcheck: "1", enabled: "1", state: "present" }
-      - { name: "fgioldslurm", url: "http://idris.fgi.csc.fi/fgci7/x86_64/fgcislurm1702", gpgkey: "http://idris.fgi.csc.fi/fgirepo6/RPM-GPG-KEY-CSC-GRID-2" }
-      - { name: "fgibadslurm", url: "http://idris.fgi.csc.fi/fgci7/x86_64/fgcislurm1605", gpgkey: "http://idris.fgi.csc.fi/fgirepo6/RPM-GPG-KEY-CSC-GRID-2", state: "absent" }
+      - { name: "1.3 - Base (CentOS_7)", url: "http://build.openhpc.community/OpenHPC:/1.3/CentOS_7", gpgkey: "http://build.openhpc.community/OpenHPC:/1.3/CentOS_7/repodata/repomd.xml.key", gpgcheck: "1", enabled: "1", state: "present" }
+      - { name: "OpenHPC-1.3 - Updates", url: "http://build.openhpc.community/OpenHPC:/1.3/updates/CentOS_7", gpgkey: "http://build.openhpc.community/OpenHPC:/1.3:/Update9/CentOS_7/repodata/repomd.xml.key", gpgcheck: "1", enabled: "1", state: "present" }
 
    roles:
      - ansible-role-yum
