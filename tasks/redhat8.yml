@@ -1,9 +1,10 @@
 ---
 # tasks file for ansible-role-yum Redhat-8 family
-# In Redhat8/CentOS8. Yum has been replaced with dnf. Using yum still in ansible parameter names, 
+# In Redhat8 and variants. Yum has been replaced with dnf. Using yum still in ansible parameter names, 
 # but changing already to dnf packet manager
 
-- name: install repos that are in repos from CentOS
+# name Centos here is deprecated even though just a name of an array
+- name: install additional repos that are found as rpms
   dnf:
     name: "{{ centos_releases | default({}) }}"
     state: present
@@ -32,7 +33,7 @@
     state: present
 
 # /etc/dnf/dnf.conf 
-- name: template in dnf.conf on CentOS8 if yum_conf_template is True
+- name: template in dnf.conf if yum_conf_template is True
   template:
     src: dnf.conf.j2
     dest: /etc/dnf/dnf.conf
@@ -42,7 +43,6 @@
     backup: yes
   when:
     - yum_conf_template
-    - ansible_distribution == "CentOS"
 
 - name: update all the things
   dnf:
